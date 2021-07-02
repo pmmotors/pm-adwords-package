@@ -10,5 +10,13 @@
         }
     ],
     "minimum-stability": "dev",
+    "autoload": {
+        "files": [
+            "src/*"
+        ],
+        "psr-4": {
+            "Analytics\\": "src/"
+        }
+    },
     "require": {}
 }
