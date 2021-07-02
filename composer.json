@@ -1,0 +1,14 @@
+{
+    "name": "pixelmotion/pm-analytics-package",
+    "description": "Project to manage the analytics",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Héctor Tello",
+            "email": "hector@pixelmotion.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
