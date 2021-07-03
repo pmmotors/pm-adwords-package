@@ -12,11 +12,13 @@
     "minimum-stability": "dev",
     "autoload": {
         "files": [
-            "src/*"
+            "src/AdWords/AdWordsConnection.php"
         ],
         "psr-4": {
-            "Analytics\\": "src/"
+            "App\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "googleads/googleads-php-lib": "~39.0.0"
+    }
 }
