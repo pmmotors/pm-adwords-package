@@ -12,7 +12,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "files": [
-            "src/AdWords/AdWordsConnection.php"
+            "src/api/AdWords/AdWordsConnection.php"
         ],
         "psr-4": {
             "App\\": "src/"
@@ -20,6 +20,7 @@
     },
     "require": {
         "googleads/googleads-php-lib": "~39.0.0",
-        "vlucas/phpdotenv": "5.3.x-dev"
+        "vlucas/phpdotenv": "5.3.x-dev",
+        "symfony/var-dumper": "5.3.x-dev"
     }
 }

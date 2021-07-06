@@ -1,6 +1,6 @@
 <?php
 
-namespace AdWords;
+namespace Api\AdWords;
 
 use Google\AdsApi\AdWords\AdWordsServices;
 use Google\AdsApi\AdWords\AdWordsSessionBuilder;
@@ -29,6 +29,7 @@ class AdWordsConnection
         $session = (new AdWordsSessionBuilder())->from($configuration)->withOAuth2Credential($oAuth2Credential)
             ->withClientCustomerID($customerId)
             ->build();
+        echo "Session correct";
         return $session;
     }
 
@@ -38,7 +39,7 @@ class AdWordsConnection
 
     public function validateAccountId($accountId)
     {
-        $configuration = (new ConfigurationLoader())->fromFile(config('google-ads.ini'));
+        $configuration = (new ConfigurationLoader())->fromFile('google-ads.ini');
 
         // Generate a refreshable OAuth2 credential for authentication.
         $oAuth2Credential = (new OAuth2TokenBuilder())
