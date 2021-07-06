@@ -2,6 +2,7 @@
 
 namespace Api\AdWords;
 
+use Dotenv\Dotenv;
 use Google\AdsApi\AdWords\AdWordsServices;
 use Google\AdsApi\AdWords\AdWordsSessionBuilder;
 use Google\AdsApi\Common\OAuth2TokenBuilder;
@@ -14,10 +15,19 @@ use Google\AdsApi\AdWords\v201809\cm\AuthenticationErrorReason;
 
 class AdWordsConnection
 {
+    private $adwords = "";
 
-    public static function getSession($customerId)
+    public function __construct()
     {
-        $configuration = (new ConfigurationLoader())->fromFile('adwords.ini');
+        $dotenv = Dotenv::createImmutable('./');
+        $dotenv->safeLoad();
+
+        $this->adwords = $_ENV['ADWORDS_INI'];
+    }
+
+    public function getSession($customerId)
+    {
+        $configuration = (new ConfigurationLoader())->fromFile($this->adwords);
 
         // Generate a refreshable OAuth2 credential for authentication.
         $oAuth2Credential = (new OAuth2TokenBuilder())
@@ -33,13 +43,9 @@ class AdWordsConnection
         return $session;
     }
 
-    public function __construct()
-    {
-    }
-
     public function validateAccountId($accountId)
     {
-        $configuration = (new ConfigurationLoader())->fromFile('google-ads.ini');
+        $configuration = (new ConfigurationLoader())->fromFile($this->adwords);
 
         // Generate a refreshable OAuth2 credential for authentication.
         $oAuth2Credential = (new OAuth2TokenBuilder())
