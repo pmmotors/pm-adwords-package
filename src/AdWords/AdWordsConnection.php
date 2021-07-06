@@ -17,7 +17,7 @@ class AdWordsConnection
 
     public static function getSession($customerId)
     {
-        $configuration = (new ConfigurationLoader())->fromFile('google-ads.ini');
+        $configuration = (new ConfigurationLoader())->fromFile('adwords.ini');
 
         // Generate a refreshable OAuth2 credential for authentication.
         $oAuth2Credential = (new OAuth2TokenBuilder())
@@ -46,7 +46,7 @@ class AdWordsConnection
             ->build();
 
         $session = (new AdWordsSessionBuilder())
-            ->from($configuration) //->fromFile(env('GOOGLE_ADWORDS_INI'))
+            ->from($configuration)
             ->withOAuth2Credential($oAuth2Credential)
             ->withClientCustomerID($accountId)
             ->build();

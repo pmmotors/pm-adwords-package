@@ -19,6 +19,7 @@
         }
     },
     "require": {
-        "googleads/googleads-php-lib": "~39.0.0"
+        "googleads/googleads-php-lib": "~39.0.0",
+        "vlucas/phpdotenv": "5.3.x-dev"
     }
 }
