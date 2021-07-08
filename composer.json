@@ -1,6 +1,7 @@
 {
     "name": "pixelmotion/pm-analytics-package",
     "description": "Project to manage the analytics",
+    "homepage": "https://github.com/pmmotors/pm-adwords-package",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -24,5 +25,10 @@
         "vlucas/phpdotenv": "5.3.x-dev",
         "symfony/var-dumper": "5.3.x-dev",
         "facebook/php-ads-sdk": "dev-master"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
