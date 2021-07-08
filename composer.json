@@ -1,5 +1,5 @@
 {
-    "name": "pixelmotion/pm-analytics-package",
+    "name": "pmmotors/pm-analytics-package",
     "description": "Project to manage the analytics",
     "homepage": "https://github.com/pmmotors/pm-adwords-package",
     "type": "library",
