@@ -1,3 +1,4 @@
 /vendor/
 adwords.ini
 .env
+composer.lock
