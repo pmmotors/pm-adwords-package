@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad8bb61018ae0f3fea647d739fc774f9",
+    "content-hash": "7064e5135fe473098f6171c61414373d",
     "packages": [
         {
             "name": "facebook/php-ads-sdk",
-            "version": "dev-master",
+            "version": "11.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/facebook-php-business-sdk.git",
@@ -28,7 +28,6 @@
                 "phpunit/phpunit": "~8",
                 "symfony/finder": "~2.6"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1845,12 +1844,13 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "vlucas/phpdotenv": 20,
-        "symfony/var-dumper": 20,
-        "facebook/php-ads-sdk": 20
+        "symfony/var-dumper": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.4.0"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
 }
