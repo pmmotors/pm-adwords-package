@@ -1,6 +1,7 @@
 <?php
 
-namespace PmAnalyticsPackage\AdWords;
+namespace PmAnalyticsPackage\api\AdWords;
+
 
 use Exception;
 use Google\AdsApi\AdWords\Reporting\v201809\ReportDownloader;

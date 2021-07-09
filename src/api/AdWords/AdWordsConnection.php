@@ -2,7 +2,6 @@
 
 namespace PmAnalyticsPackage\AdWords;
 
-use Dotenv;
 use Dotenv\Dotenv as DotenvDotenv;
 use Google\AdsApi\AdWords\AdWordsServices;
 use Google\AdsApi\AdWords\AdWordsSessionBuilder;
