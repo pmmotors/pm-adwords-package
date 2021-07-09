@@ -2,16 +2,16 @@
 
 namespace PmAnalyticsPackage\api\AdWords;
 
-
+use Dotenv\Dotenv;
 use Exception;
 use Google\AdsApi\AdWords\Reporting\v201809\ReportDownloader;
 use Google\AdsApi\AdWords\AdWordsSessionBuilder;
 use Google\AdsApi\AdWords\Reporting\v201806\DownloadFormat;
-use Google\AdsApi\AdWords\Reporting\v201806\ReportDefinition;
+use Google\AdsApi\AdWords\Reporting\v201809\ReportDefinition;
 use Google\AdsApi\AdWords\Reporting\v201806\ReportDefinitionDateRangeType;
 use Google\AdsApi\AdWords\ReportSettingsBuilder;
 use Google\AdsApi\AdWords\v201806\cm\DateRange;
-use Google\AdsApi\AdWords\v201806\cm\Selector;
+use Google\AdsApi\AdWords\v201809\cm\Selector;
 use Google\AdsApi\Common\ConfigurationLoader;
 use Google\AdsApi\Common\OAuth2TokenBuilder;
 
@@ -77,7 +77,14 @@ abstract class AdWordsReportV2
 
     private function getAdwordsSession()
     {
-        $configuration = (new ConfigurationLoader())->fromFile('adwords.ini');
+        $dotenv = new Dotenv('./');
+        $dotenv->safeLoad();
+
+        $env = $_ENV['MODE'];
+
+        $configuration = $env === 'dev' ?
+            (new ConfigurationLoader())->fromFile('adwords.ini')
+            : (new ConfigurationLoader())->fromFile(config('google-ads.ini'));
 
         // Generate a refreshable OAuth2 credential for authentication.
         $oAuth2Credential = (new OAuth2TokenBuilder())

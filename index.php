@@ -2,6 +2,7 @@
 
 use PmAnalyticsPackage\AdWords\AdWordsConnection;
 use PmAnalyticsPackage\api\AdWords\AdWordsReportMaserati;
+use Carbon\Carbon;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -13,8 +14,8 @@ $ad_words_id = "104-280-2798";
 
 $maserati = new AdWordsReportMaserati(
     '338-219-1963',
-    '07/01/2021',
-    '07/08/2021',
+    Carbon::createFromDate(2021, 1, 7),
+    Carbon::createFromDate(2021, 8, 7),
     'spectrumcollision.com'
 );
 
