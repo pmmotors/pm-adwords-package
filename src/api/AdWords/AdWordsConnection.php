@@ -1,8 +1,9 @@
 <?php
 
-namespace Api\AdWords;
+namespace PmAnalyticsPackage\AdWords;
 
-use Dotenv\Dotenv;
+use Dotenv;
+use Dotenv\Dotenv as DotenvDotenv;
 use Google\AdsApi\AdWords\AdWordsServices;
 use Google\AdsApi\AdWords\AdWordsSessionBuilder;
 use Google\AdsApi\Common\OAuth2TokenBuilder;
@@ -19,7 +20,7 @@ class AdWordsConnection
 
     public function __construct()
     {
-        $dotenv = Dotenv::createImmutable('./');
+        $dotenv = new DotenvDotenv('./');
         $dotenv->safeLoad();
 
         $this->adwords = $_ENV['ADWORDS_INI'];

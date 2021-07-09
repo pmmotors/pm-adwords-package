@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\AdWords;
+namespace PmAnalyticsPackage\AdWords;
 
 use Google\AdsApi\AdManager\v201802\Money;
 use Google\AdsApi\AdWords\AdWordsServices;
