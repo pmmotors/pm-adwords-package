@@ -20,8 +20,8 @@ abstract class AdWordsReportV2
 
     private $startDate;
     private $endDate;
-    // private $adWordsArray = [];
-    private $errorMsg = "";
+    private $adWordsArray = [];
+    public $errorMsg = "";
 
     /**
      * @var string account Id for adwords

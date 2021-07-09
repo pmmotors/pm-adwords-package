@@ -3,3 +3,4 @@ adwords.ini
 .env
 composer.lock
 src/api/AdWords/AdWordsReportMaserati.php
+src/api/AdWords/AdWordsReportBudget.php
