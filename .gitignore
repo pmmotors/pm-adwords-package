@@ -5,3 +5,4 @@ composer.lock
 src/api/AdWords/AdWordsReportMaserati.php
 src/api/AdWords/AdWordsReportBudget.php
 src/api/AdWords/AdWordsReportCallExtension.php
+src/api/AdWords/AdWordsReportCampaign.php

@@ -5,6 +5,7 @@ use PmAnalyticsPackage\api\AdWords\AdWordsReportMaserati;
 use Carbon\Carbon;
 use PmAnalyticsPackage\api\AdWords\AdWordsReportBudget;
 use PmAnalyticsPackage\api\AdWords\AdWordsReportCallExtension;
+use PmAnalyticsPackage\api\AdWords\AdWordsReportCampaign;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -14,20 +15,11 @@ $ad_words_id = "104-280-2798";
 $apiAdWords = new AdWordsConnection();
 $apiAdWords->getSession($ad_words_id);
 
-// $maserati = new AdWordsReportMaserati(
-//     '338-219-1963',
-//     Carbon::createFromDate(2021, 1, 7),
-//     Carbon::createFromDate(2021, 8, 7),
-//     'spectrumcollision.com'
-// );
-
-// $maserati->getReport();
-
-$budget = new AdWordsReportCallExtension(
+$report = new AdWordsReportCampaign(
     '338-219-1963',
     Carbon::createFromDate(2021, 1, 7),
     Carbon::createFromDate(2021, 8, 7),
     'spectrumcollision.com'
 );
 
-$budget->getReport();
+$report->getReport();
