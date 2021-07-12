@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Facebook;
+namespace PmAnalyticsPackage\api\Facebook;
 
 use FacebookAds\Http\Exception\AuthorizationException;
 use FacebookAds\Object\AdAccount;
