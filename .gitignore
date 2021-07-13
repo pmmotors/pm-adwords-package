@@ -11,3 +11,4 @@ src/api/Facebook/FacebookAd.php
 src/api/Facebook/FacebookAdCreative.php
 src/api/Facebook/FacebookAdSet.php
 src/api/Facebook/FacebookReportVW.php
+src/api/DialogTech/AllPhoneCallsReport.php
