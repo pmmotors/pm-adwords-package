@@ -61,6 +61,8 @@ class DialogTechReport
      */
     protected $phoneNumberArr;
 
+    private $env = '';
+
     public function __construct($reportStartDate, $reportEndDate, $accountName, $phoneNumberArr)
     {
         if (is_array($phoneNumberArr)) {
@@ -72,10 +74,19 @@ class DialogTechReport
         $this->accountName = htmlentities($accountName);
         $this->phoneNumberArr = $phoneNumberArr;
 
-        $configs = include('src/config/dialogtech.php');
+        $dotenv = new Dotenv('./');
+        $dotenv->safeLoad();
 
-        $this->dataAPIKey = $configs['apiKey'];
-        $this->dataURL = $configs['url'];
+        $this->env = $_ENV['MODE'];
+        if ($this->env === 'dev') {
+            $configs = include('src/config/dialogtech.php');
+
+            $this->dataAPIKey = $configs['apiKey'];
+            $this->dataURL = $configs['url'];
+        } else {
+            $this->dataAPIKey = config('dialogtech.apiKey');
+            $this->dataURL = config('dialogtech.url');
+        }
 
         // initialize the Dialog Tech Array
         $this->initDialogTechArray();
@@ -281,12 +292,7 @@ class DialogTechReport
      */
     private function getReport()
     {
-        $dotenv = new Dotenv('./');
-        $dotenv->safeLoad();
-
-        $env = $_ENV['MODE'];
-
-        $csvFile = $env === 'dev' ?
+        $csvFile = $this->env === 'dev' ?
             $this->dataSourcePath . $this->dataReportName
             : storage_path() . $this->dataSourcePath . $this->dataReportName;
         //$csvFile = dirname(__FILE__) . '/'.$this->dataReportName;
