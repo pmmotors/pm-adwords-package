@@ -39,7 +39,7 @@ class DialogTechReport
     /**
      * @var string The path to the /data folder outside of the webroot
      */
-    private $dataSourcePath = '/app/dialogtech/';
+    private $dataSourcePath = '/app/dialogtech';
 
     /**
      * @var string the name of the file
