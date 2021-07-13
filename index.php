@@ -24,9 +24,10 @@ require __DIR__ . '/vendor/autoload.php';
 // $report->getReport();
 
 // Testing facebook
-Facebook::facebookInit();
+Facebook::FacebookInit();
 
-$account = new AdAccount('act_1369958279705871');
+$account_id = "1369958279705871";
+$account = Facebook::FacebookAdAccount($account_id);
 $facebookAd = new FacebookReport(
     $account,
     '2021-01-07',

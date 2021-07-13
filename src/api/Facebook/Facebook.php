@@ -12,7 +12,7 @@ class Facebook
     {
     }
 
-    public static function facebookInit()
+    public static function FacebookInit()
     {
         $configs = include('src/config/facebook.php');
 
