@@ -24,8 +24,7 @@ require __DIR__ . '/vendor/autoload.php';
 // $report->getReport();
 
 // Testing facebook
-$facebook = new Facebook();
-$facebook->facebookInit();
+Facebook::facebookInit();
 
 $account = new AdAccount('act_1369958279705871');
 $facebookAd = new FacebookReport(
@@ -35,4 +34,4 @@ $facebookAd = new FacebookReport(
     'spectrumcollision.com'
 );
 
-print_r($facebookAd->getInsightsParams());
+print_r($facebookAd->getDataFromFacebookAPI());

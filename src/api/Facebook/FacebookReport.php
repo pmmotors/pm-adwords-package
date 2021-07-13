@@ -199,7 +199,7 @@ class FacebookReport
      *
      * @return array A multidimensional array containing all the reports data from Facebook's API
      */
-    private function getDataFromFacebookAPI($type = 'insights')
+    public function getDataFromFacebookAPI($type = 'insights')
     {
         $data = array();
         // try {
