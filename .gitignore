@@ -7,3 +7,6 @@ src/api/AdWords/AdWordsReportBudget.php
 src/api/AdWords/AdWordsReportCallExtension.php
 src/api/AdWords/AdWordsReportCampaign.php
 src/api/AdWords/AdWordsReportOverview.php
+src/api/Facebook/FacebookAd.php
+src/api/Facebook/FacebookAdCreative.php
+src/api/Facebook/FacebookAdSet.php

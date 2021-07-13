@@ -12,7 +12,7 @@ class Facebook
     {
     }
 
-    public function facebookInit()
+    public static function facebookInit()
     {
         $configs = include('src/config/facebook.php');
 
@@ -23,11 +23,17 @@ class Facebook
         );
     }
 
-    public function validateAccountId($facebookId)
+    public static function FacebookAdAccount($facebookId)
     {
         $facebookACT = 'act_' . $facebookId;
         $facebookAccount = new AdAccount($facebookACT);
 
+        return $facebookAccount;
+    }
+
+    public function validateAccountId($facebookId)
+    {
+        $facebookAccount = self::FacebookAdAccount($facebookId);
         try {
             // TEST request
             $facebookAccount->getUsers();
