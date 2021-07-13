@@ -12,7 +12,7 @@ class Facebook
     {
     }
 
-    public static function validateAccountId($facebookId)
+    public function facebookInit()
     {
         $configs = include('src/config/facebook.php');
 
@@ -21,7 +21,10 @@ class Facebook
             $configs['config']['app_secret'],
             $configs['config']['access_token'],
         );
+    }
 
+    public function validateAccountId($facebookId)
+    {
         $facebookACT = 'act_' . $facebookId;
         $facebookAccount = new AdAccount($facebookACT);
 

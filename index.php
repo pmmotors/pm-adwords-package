@@ -1,13 +1,14 @@
 <?php
 
 use PmAnalyticsPackage\api\Facebook\Facebook;
-use PmAnalyticsPackage\AdWords\AdWordsConnection;
-use Carbon\Carbon;
-use PmAnalyticsPackage\api\AdWords\AdWordsReportOverview;
+use PmAnalyticsPackage\api\Facebook\FacebookReport;
+use FacebookAds\Object\AdAccount;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$ad_words_id = "104-280-2798";
+// Testing AdWords
+
+// $ad_words_id = "104-280-2798";
 
 //Getting session for each customerId 
 // $apiAdWords = new AdWordsConnection();
@@ -22,4 +23,16 @@ $ad_words_id = "104-280-2798";
 
 // $report->getReport();
 
-var_dump(Facebook::validateAccountId('1369958279705871'));
+// Testing facebook
+$facebook = new Facebook();
+$facebook->facebookInit();
+
+$account = new AdAccount('act_1369958279705871');
+$facebookAd = new FacebookReport(
+    $account,
+    '2021-01-07',
+    '2021-08-07',
+    'spectrumcollision.com'
+);
+
+print_r($facebookAd->getInsightsParams());
