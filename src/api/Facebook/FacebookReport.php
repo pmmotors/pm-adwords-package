@@ -136,7 +136,7 @@ class FacebookReport
      *
      * @return array The Insights Fields need for the report
      */
-    private function getInsightsFields()
+    public function getInsightsFields()
     {
         return array(
             AdsInsightsFields::IMPRESSIONS,   //InsightsFields::IMPRESSIONS,            // Impressions
@@ -150,7 +150,7 @@ class FacebookReport
      *
      * @return array The Insights Parameters
      */
-    private function getInsightsParamsProfitCenter()
+    public function getInsightsParamsProfitCenter()
     {
         return array(
             'time_range' => array(
@@ -173,7 +173,7 @@ class FacebookReport
      *
      * @return array The Insights Fields need for the report
      */
-    private function getInsightsFieldsProfitCenter()
+    public function getInsightsFieldsProfitCenter()
     {
         return array(
             AdsInsightsFields::IMPRESSIONS,
