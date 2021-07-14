@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\AdWords;
+namespace PmAnalyticsPackage\api\Google;
 
 use Exception;
 
@@ -46,6 +46,15 @@ class GoogleAnalyticsReport
      */
     private $dataSourcePath;
 
+    /**
+     * Construct for Google Analytics Report
+     *
+     * @param $analytics object Analytics service object
+     * @param $profileId string Google Profile ID for the dealership
+     * @param $reportDate string Date formatted YYYY-MM-DD
+     * @param $accountName string The dealership name
+     * @param $dataSourcePath string The path to the /data folder outside of the webroot
+     */
     public function __contruct(&$analytics, $profileId, $reportDate, $accountName, $dataSourcePath)
     {
         $this->analytics = &$analytics;

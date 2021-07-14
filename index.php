@@ -5,6 +5,8 @@ use PmAnalyticsPackage\api\Facebook\FacebookReport;
 use FacebookAds\Object\AdAccount;
 use PmAnalyticsPackage\api\DialogTech\DialogTechReport;
 use Carbon\Carbon;
+use PmMotors\Google\Facades\Google;
+use PmAnalyticsPackage\api\Google\GoogleAnalyticsReport;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -41,11 +43,22 @@ require __DIR__ . '/vendor/autoload.php';
 
 // Testing DialogTech
 
-$dialog = new DialogTechReport(
-    new Carbon('first day of last month'),
-    new Carbon('last day of last month'),
-    'Gupton Motors Inc',
-    '615-384-2886'
-);
+// $dialog = new DialogTechReport(
+//     new Carbon('first day of last month'),
+//     new Carbon('last day of last month'),
+//     'Gupton Motors Inc',
+//     '615-384-2886'
+// );
 
-$dialog->getDialogTechArray();
+// $dialog->getDialogTechArray();
+
+// Testing Google
+$dataSourcePath = 'src/config/';
+$analytics = Google::make('analytics');
+$google = new GoogleAnalyticsReport(
+    $analytics,
+    '149221862',
+    '2021-03-03',
+    'Woodstock Garage',
+    $dataSourcePath
+);
