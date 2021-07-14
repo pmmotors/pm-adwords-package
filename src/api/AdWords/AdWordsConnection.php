@@ -1,6 +1,6 @@
 <?php
 
-namespace PmAnalyticsPackage\AdWords;
+namespace PmAnalyticsPackage\api\AdWords;
 
 use Dotenv\Dotenv as DotenvDotenv;
 use Google\AdsApi\AdWords\AdWordsServices;
@@ -39,7 +39,6 @@ class AdWordsConnection
         $session = (new AdWordsSessionBuilder())->from($configuration)->withOAuth2Credential($oAuth2Credential)
             ->withClientCustomerID($customerId)
             ->build();
-        echo "Session correct";
         return $session;
     }
 

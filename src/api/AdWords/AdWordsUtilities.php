@@ -1,20 +1,20 @@
 <?php
 
-namespace PmAnalyticsPackage\AdWords;
+namespace PmAnalyticsPackage\api\AdWords;
 
 use Google\AdsApi\AdManager\v201802\Money;
 use Google\AdsApi\AdWords\AdWordsServices;
 use Google\AdsApi\AdWords\AdWordsSession;
-use Google\AdsApi\AdWords\v201806\cm\AdGroupService;
-use Google\AdsApi\AdWords\v201806\cm\AdService;
-use Google\AdsApi\AdWords\v201806\cm\Budget;
-use Google\AdsApi\AdWords\v201806\cm\BudgetOperation;
-use Google\AdsApi\AdWords\v201806\cm\BudgetService;
-use Google\AdsApi\AdWords\v201806\cm\CampaignService;
-use Google\AdsApi\AdWords\v201806\cm\Operator;
-use Google\AdsApi\AdWords\v201806\cm\OrderBy;
-use Google\AdsApi\AdWords\v201806\cm\Paging;
-use Google\AdsApi\AdWords\v201806\cm\SortOrder;
+use Google\AdsApi\AdWords\v201809\cm\AdGroupService;
+use Google\AdsApi\AdWords\v201809\cm\AdService;
+use Google\AdsApi\AdWords\v201809\cm\Budget;
+use Google\AdsApi\AdWords\v201809\cm\BudgetOperation;
+use Google\AdsApi\AdWords\v201809\cm\BudgetService;
+use Google\AdsApi\AdWords\v201809\cm\CampaignService;
+use Google\AdsApi\AdWords\v201809\cm\Operator;
+use Google\AdsApi\AdWords\v201809\cm\OrderBy;
+use Google\AdsApi\AdWords\v201809\cm\Paging;
+use Google\AdsApi\AdWords\v201809\cm\SortOrder;
 use Google\AdsApi\AdWords\v201809\cm\Selector;
 use Google\AdsApi\AdWords\v201809\cm\Predicate;
 use Google\AdsApi\AdWords\v201809\cm\PredicateOperator;

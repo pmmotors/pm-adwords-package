@@ -7,16 +7,22 @@ use PmAnalyticsPackage\api\DialogTech\DialogTechReport;
 use Carbon\Carbon;
 use PmMotors\Google\Facades\Google;
 use PmAnalyticsPackage\api\Google\GoogleAnalyticsReport;
+use PmAnalyticsPackage\api\AdWords\AdWordsConnection;
+use PmAnalyticsPackage\api\AdWords\AdWordsUtilities;
 
 require __DIR__ . '/vendor/autoload.php';
 
 // Testing AdWords
 
-// $ad_words_id = "104-280-2798";
+$ad_words_id = "104-280-2798";
 
-//Getting session for each customerId 
-// $apiAdWords = new AdWordsConnection();
-// $apiAdWords->getSession($ad_words_id);
+// Getting session for each customerId 
+$apiAdWords = new AdWordsConnection();
+$sesion = $apiAdWords->getSession($ad_words_id);
+
+$utilites = new AdWordsUtilities($sesion);
+$utilites->getCampaigns();
+
 
 // $report = new AdWordsReportOverview(
 //     '338-219-1963',
@@ -53,12 +59,12 @@ require __DIR__ . '/vendor/autoload.php';
 // $dialog->getDialogTechArray();
 
 // Testing Google
-$dataSourcePath = 'src/config/';
-$analytics = Google::make('analytics');
-$google = new GoogleAnalyticsReport(
-    $analytics,
-    '149221862',
-    '2021-03-03',
-    'Woodstock Garage',
-    $dataSourcePath
-);
+// $dataSourcePath = 'src/config/';
+// $analytics = Google::make('analytics');
+// $google = new GoogleAnalyticsReport(
+//     $analytics,
+//     '149221862',
+//     '2021-03-03',
+//     'Woodstock Garage',
+//     $dataSourcePath
+// );
