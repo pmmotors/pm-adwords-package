@@ -6,11 +6,11 @@ use Dotenv\Dotenv;
 use Exception;
 use Google\AdsApi\AdWords\Reporting\v201809\ReportDownloader;
 use Google\AdsApi\AdWords\AdWordsSessionBuilder;
-use Google\AdsApi\AdWords\Reporting\v201806\DownloadFormat;
+use Google\AdsApi\AdWords\Reporting\v201809\DownloadFormat;
 use Google\AdsApi\AdWords\Reporting\v201809\ReportDefinition;
-use Google\AdsApi\AdWords\Reporting\v201806\ReportDefinitionDateRangeType;
+use Google\AdsApi\AdWords\Reporting\v201809\ReportDefinitionDateRangeType;
 use Google\AdsApi\AdWords\ReportSettingsBuilder;
-use Google\AdsApi\AdWords\v201806\cm\DateRange;
+use Google\AdsApi\AdWords\v201809\cm\DateRange;
 use Google\AdsApi\AdWords\v201809\cm\Selector;
 use Google\AdsApi\Common\ConfigurationLoader;
 use Google\AdsApi\Common\OAuth2TokenBuilder;
@@ -77,7 +77,7 @@ abstract class AdWordsReportV2
 
     private function getAdwordsSession()
     {
-        $dotenv = new Dotenv('./');
+        $dotenv = Dotenv::createImmutable('./');
         $dotenv->safeLoad();
 
         $env = $_ENV['MODE'];

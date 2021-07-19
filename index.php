@@ -1,14 +1,8 @@
 <?php
 
-use PmAnalyticsPackage\api\Facebook\Facebook;
-use PmAnalyticsPackage\api\Facebook\FacebookReport;
-use FacebookAds\Object\AdAccount;
-use PmAnalyticsPackage\api\DialogTech\DialogTechReport;
 use Carbon\Carbon;
-use PmMotors\Google\Facades\Google;
-use PmAnalyticsPackage\api\Google\GoogleAnalyticsReport;
 use PmAnalyticsPackage\api\AdWords\AdWordsConnection;
-use PmAnalyticsPackage\api\AdWords\AdWordsUtilities;
+use PmAnalyticsPackage\api\AdWords\AdWordsReportBudget;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -20,18 +14,18 @@ $ad_words_id = "104-280-2798";
 $apiAdWords = new AdWordsConnection();
 $sesion = $apiAdWords->getSession($ad_words_id);
 
-$utilites = new AdWordsUtilities($sesion);
-$utilites->getCampaigns();
+// $utilites = new AdWordsUtilities($sesion);
+// $utilites->getCampaigns();
 
 
-// $report = new AdWordsReportOverview(
-//     '338-219-1963',
-//     Carbon::createFromDate(2021, 1, 7),
-//     Carbon::createFromDate(2021, 8, 7),
-//     'spectrumcollision.com'
-// );
+$report = new AdWordsReportBudget(
+  '338-219-1963',
+  Carbon::createFromDate(2021, 1, 7),
+  Carbon::createFromDate(2021, 8, 7),
+  'spectrumcollision.com'
+);
 
-// $report->getReport();
+$report->getReport();
 
 // Testing facebook
 // Facebook::FacebookInit();
