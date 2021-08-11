@@ -3,8 +3,29 @@
 
 Library for managing analytics and be installed in another projects
 
+## CONFIGURATION FOR DEVELOP IN THIS PROJECT:
 
+## SET UP
+* Clone this repository
 
+* Create container:
+```bash
+    docker-compose up -d
+```
+
+* Access the container: 
+```bash
+    docker-compose exec php-apache bash
+```
+* Install dependencies:
+
+```bash
+    composer install
+```
+
+* Open a browser on `localhost:8000`
+
+## CONFIGURATION FOR ADD THIS PROJECT AS A DEPENDENCY:
 
 ## Installation
 
@@ -13,15 +34,7 @@ Install via composer running
 ```bash
   composer require pmmotors/pm-analytics-package
 ```
-Or, editing the `composer.json`:
 
-```bash
-"require": {
-    "pmmotors/pm-analytics-package": "^1.1",
-}
-```
-
-Then run `composer update`
 ## Usage
 
 In this example, pm-reports project will be used:
@@ -104,3 +117,23 @@ $google = new GoogleAnalyticsReport(
 $google->getAnalyticsArray();
 
 ```
+## Installation
+
+Install my-project with npm
+
+```bash
+  npm install my-project
+  cd my-project
+```
+    
+## Usage/Examples
+
+```javascript
+import Component from 'my-project'
+
+function App() {
+  return <Component />
+}
+```
+
+  
