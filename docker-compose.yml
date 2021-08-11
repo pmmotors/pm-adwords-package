@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+    php-apache:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        image: php-apache-app
+        container_name: php-apache
+        restart: unless-stopped
+        working_dir: /var/www/html/
+        volumes:
+            - ./:/var/www/html/
+        ports:
+            - 8000:80
