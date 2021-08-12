@@ -1,4 +1,3 @@
-
 # PMAnalytics Package
 
 Library for managing analytics and be installed in another projects
@@ -6,24 +5,30 @@ Library for managing analytics and be installed in another projects
 ## CONFIGURATION FOR DEVELOP IN THIS PROJECT:
 
 ## SET UP
-* Clone this repository
 
-* Create container:
+-   Clone this repository
+-   Create the `.env` file with the correct values.
+-   Add the `adwords.ini` file
+
+-   Create container:
+
 ```bash
     docker-compose up -d
 ```
 
-* Access the container: 
+-   Access the container:
+
 ```bash
     docker-compose exec php-apache bash
 ```
-* Install dependencies:
+
+-   Install dependencies:
 
 ```bash
     composer install
 ```
 
-* Open a browser on `localhost:8000`
+-   Open a browser on `localhost:8000`
 
 ## CONFIGURATION FOR ADD THIS PROJECT AS A DEPENDENCY:
 
@@ -41,7 +46,8 @@ In this example, pm-reports project will be used:
 
 ### Using AdWords
 
-Injectin PmAnalyticsPackage: 
+Injectin PmAnalyticsPackage:
+
 ```php
 
 // use App\Api\Analytics\AdWords\AdWordsReportV2;
@@ -117,6 +123,7 @@ $google = new GoogleAnalyticsReport(
 $google->getAnalyticsArray();
 
 ```
+
 ## Installation
 
 Install my-project with npm
@@ -125,15 +132,13 @@ Install my-project with npm
   npm install my-project
   cd my-project
 ```
-    
+
 ## Usage/Examples
 
 ```javascript
-import Component from 'my-project'
+import Component from "my-project";
 
 function App() {
-  return <Component />
+    return <Component />;
 }
 ```
-
-  
