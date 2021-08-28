@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use PmAnalyticsPackage\api\AdWords\AdWordsConnection;
 use PmAnalyticsPackage\api\AdWords\AdWordsReportBudget;
+use PmAnalyticsPackage\api\Google\GoogleAnalytics;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -11,21 +12,21 @@ require __DIR__ . '/vendor/autoload.php';
 $ad_words_id = "104-280-2798";
 
 // Getting session for each customerId 
-$apiAdWords = new AdWordsConnection();
-$sesion = $apiAdWords->getSession($ad_words_id);
+// $apiAdWords = new AdWordsConnection();
+// $sesion = $apiAdWords->getSession($ad_words_id);
 
 // $utilites = new AdWordsUtilities($sesion);
 // $utilites->getCampaigns();
 
 
-$report = new AdWordsReportBudget(
-    '338-219-1963',
-    Carbon::createFromDate(2021, 1, 7),
-    Carbon::createFromDate(2021, 8, 7),
-    'spectrumcollision.com'
-);
+// $report = new AdWordsReportBudget(
+//     '338-219-1963',
+//     Carbon::createFromDate(2021, 1, 7),
+//     Carbon::createFromDate(2021, 8, 7),
+//     'spectrumcollision.com'
+// );
 
-print_r($report->getReport());
+// print_r($report->getReport());
 
 // Testing facebook
 // Facebook::FacebookInit();
@@ -53,12 +54,9 @@ print_r($report->getReport());
 // $dialog->getDialogTechArray();
 
 // Testing Google
-// $dataSourcePath = 'src/config/';
-// $analytics = Google::make('analytics');
-// $google = new GoogleAnalyticsReport(
-//     $analytics,
-//     '149221862',
-//     '2021-03-03',
-//     'Woodstock Garage',
-//     $dataSourcePath
-// );
+$profileId = "113888309";
+$google = new GoogleAnalytics();
+$analytics = $google->initializeAnalytics();
+$profile = $google->getFirstProfileId($analytics);
+$results = $google->getResults($analytics, $profile);
+echo $results;
