@@ -2,6 +2,8 @@
 
 namespace PmAnalyticsPackage\api\Google;
 
+use PmAnalyticsPackage\api\Google\Models\Dealership;
+
 class GoogleAnalyticsAPI
 {
     private $errorMsg = '';
@@ -15,9 +17,11 @@ class GoogleAnalyticsAPI
 
     public function __construct($dealer, $reportStartDate, $reportEndDate, $accountName)
     {
-        $this->analytics = isset($dealer) ? $dealer->getGoogleAnalyticsClient() : null;
+        $this->analytics = isset($dealer) ?
+            Dealership::getGoogleAnalyticsClient() : null;
 
-        $this->profileId = isset($dealer) ? $dealer->google_profile_id : '';
+        $this->profileId = isset($dealer) ?
+            $dealer[0]['google_profile_id'] : '';
         $this->reportStartDate = $reportStartDate;
         $this->reportEndDate = $reportEndDate;
         $this->accountName = $accountName;
@@ -74,11 +78,11 @@ class GoogleAnalyticsAPI
             'ga:sessions',
             'ga:users',
             'ga:newUsers',
-            'ga:bounces',
-            'ga:goal1Completions',
-            'ga:goal20Completions',
-            'ga:pageviews',
-            'ga:avgTimeOnPage'
+            // 'ga:bounces',
+            // 'ga:goal1Completions',
+            // 'ga:goal20Completions',
+            // 'ga:pageviews',
+            // 'ga:avgTimeOnPage'
         ];
         $dateFormat = 'Y-m-d';
 
@@ -116,14 +120,15 @@ class GoogleAnalyticsAPI
         // get the multi dimensional array from GA API
         try {
             $results = $this->getAnalyticsData();
+            print_r($results);
             $formSubmissionsResult = $this->getFormSubmissions();
             // dd($formSubmissionsResult);
         } catch (apiServiceException $e) {
             // Error from the API.
-            echo '<p class="errorMessage">There was an API error : ' . $e->getCode() . ' : ' . $e->getMessage() . '</p>' . PHP_EOL;
+            echo '<p class="errorMessage">There was an API error: ' . $e->getCode() . ' : ' . $e->getMessage() . '</p>' . PHP_EOL;
             $this->errorMsg .= 'There was an API error : ' . $e->getCode() . ' : ' . $e->getMessage() . PHP_EOL;
         } catch (\Exception $e) {
-            echo '<p class="errorMessage">There was a general error : ' . $e->getMessage() . '</p>' . PHP_EOL;
+            echo '<p class="errorMessage">There was a general error: ' . $e->getMessage() . '</p>' . PHP_EOL;
             $this->errorMsg .= 'There was a general error : ' . $e->getMessage() . PHP_EOL;
         }
 

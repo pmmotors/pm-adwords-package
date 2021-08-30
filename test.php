@@ -4,6 +4,8 @@ use Carbon\Carbon;
 use PmAnalyticsPackage\api\AdWords\AdWordsConnection;
 use PmAnalyticsPackage\api\AdWords\AdWordsReportBudget;
 use PmAnalyticsPackage\api\Google\GoogleAnalytics;
+use PmAnalyticsPackage\api\Google\Controllers\AnalyticsController;
+use PmMotors\Google\Facades\Google;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -54,9 +56,11 @@ $ad_words_id = "104-280-2798";
 // $dialog->getDialogTechArray();
 
 // Testing Google
-$profileId = "113888309";
-$google = new GoogleAnalytics();
-$analytics = $google->initializeAnalytics();
-$profile = $google->getFirstProfileId($analytics);
-$results = $google->getResults($analytics, $profile);
-echo $results;
+$profileId = "45468";
+$analytics = new AnalyticsController();
+$startDate = "2021-08-01";
+$endDate = "2021-08-19";
+
+$output = $analytics->getAnalyticsData($profileId, $startDate, $endDate);
+// print_r($output);
+// print_r(AnalyticsController::getDealer($profileId));

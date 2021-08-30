@@ -1,15 +1,15 @@
 <?php
 
-namespace PmAnalyticsPackage\api\Google\Model;
+namespace PmAnalyticsPackage\api\Google\Models;
 
 use PmAnalyticsPackage\api\Google\GoogleAnalytics;
 
 class Dealership
 {
 
-    private $is_google_web_account;
-    public function getGoogleAnalyticsClient()
+    public static $is_google_web_account = null;
+    public static function getGoogleAnalyticsClient()
     {
-        return GoogleAnalytics::getGoogleAnalyticsClient($this->is_google_web_account);
+        return GoogleAnalytics::getGoogleAnalyticsClient(self::$is_google_web_account);
     }
 }

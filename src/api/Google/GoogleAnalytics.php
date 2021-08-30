@@ -64,8 +64,9 @@ class GoogleAnalytics
 
     public static function getGoogleAnalyticsClient($is_google_web_account)
     {
-        if (!in_array($is_google_web_account, ['false', 'null', false, null])) {
-            $google = new GoogleClient(array(''));
+        if (in_array($is_google_web_account, ['false', 'null', false, null])) {
+            $configs = include('src/config/google-pm-web.php');
+            $google = new GoogleClient($configs);
             return $google->make('analytics');
         }
         return Google::make('analytics');

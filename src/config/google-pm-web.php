@@ -4,7 +4,7 @@ use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable('./');
 $dotenv->safeLoad();
-$_ENV['ADWORDS_INI'];
+
 return [
     /*
     |----------------------------------------------------------------------------

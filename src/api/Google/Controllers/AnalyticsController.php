@@ -1,9 +1,10 @@
 <?php
 
-namespace PmAnalyticsPackage\api\Google\Controller;
+namespace PmAnalyticsPackage\api\Google\Controllers;
 
 use PmAnalyticsPackage\api\Google\GoogleAnalyticsAPI;
 use Dotenv\Dotenv;
+use Carbon\Carbon;
 
 class AnalyticsController
 {
@@ -12,13 +13,13 @@ class AnalyticsController
         $format = 'Y-m-d';
         $startDate = \DateTime::createFromFormat($format, $startDate);
         $endDate = \DateTime::createFromFormat($format, $endDate);
-        $dealer = $this->getDealer($dealerCode);
+        $dealer = self::getDealer($dealerCode);
 
         $ga = new GoogleAnalyticsAPI(
-            $dealerCode,
+            $dealer,
             $startDate,
             $endDate,
-            $dealer->account_name
+            $dealer[0]['account_name']
         );
 
         $output = [
@@ -34,12 +35,12 @@ class AnalyticsController
                 }
             }
         }
-        $output['google_profile_id'] = $dealer->google_profile_id;
-        $output['account_name'] = $dealer->account_name;
+        $output['google_profile_id'] = $dealer[0]['google_profile_id'];
+        $output['account_name'] = $dealer[0]['account_name'];
         return $output;
     }
 
-    private function getDealer($dealerCode)
+    public static function getDealer($dealerCode)
     {
         $dotenv = Dotenv::createImmutable('./');
         $dotenv->safeLoad();
