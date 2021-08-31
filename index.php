@@ -10,6 +10,7 @@
 
 <body>
   <h4>If you are seeing this, the configuration <strong>were ok</strong></h4>
+  <?php echo __DIR__ ?>
 </body>
 
 </html>
