@@ -4,7 +4,7 @@ namespace PmAnalyticsPackage\api\Google\Controllers;
 
 use PmAnalyticsPackage\api\Google\GoogleAnalyticsAPI;
 use Dotenv\Dotenv;
-use Carbon\Carbon;
+use PmAnalyticsPackage\api\Helpers\CurlHelper;
 
 class AnalyticsController
 {
@@ -13,7 +13,7 @@ class AnalyticsController
         $format = 'Y-m-d';
         $startDate = \DateTime::createFromFormat($format, $startDate);
         $endDate = \DateTime::createFromFormat($format, $endDate);
-        $dealer = self::getDealer($dealerCode);
+        $dealer = self::dealerType($dealerCode);
 
         $ga = new GoogleAnalyticsAPI(
             $dealer,
@@ -40,19 +40,13 @@ class AnalyticsController
         return $output;
     }
 
-    public static function getDealer($dealerCode)
+    public static function dealerType($dealer)
     {
-        $dotenv = Dotenv::createImmutable('./');
-        $dotenv->safeLoad();
+        $dealer = CurlHelper::getDealerByDealerCode($dealer);
 
-        $url = $_ENV['URL_PIXEL_MOTION_DEMO'];
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url . 'dealerships/' . $dealerCode);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $dealership = curl_exec($ch);
-        curl_close($ch);
-
-        $dealership = json_decode($dealership, true);
-        return $dealership;
+        if (count($dealer)) {
+            return $dealer;
+        }
+        return CurlHelper::getDealerByGoogleProfileId($dealer);
     }
 }

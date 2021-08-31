@@ -2,6 +2,7 @@
 
 namespace PmAnalyticsPackage\api\Google;
 
+use PmAnalyticsPackage\api\Helpers\CurlHelper;
 use PmMotors\Google\Facades\Google;
 use PmMotors\Google\Client as GoogleClient;
 
@@ -62,13 +63,15 @@ class GoogleAnalytics
         $this->analyticsArray = $profitCenterArray;
     }
 
-    public static function getGoogleAnalyticsClient($is_google_web_account)
+    public static function getGoogleAnalyticsClient($dealer)
     {
-        if (in_array($is_google_web_account, ['false', 'null', false, null])) {
-            $configs = include('src/config/google-pm-web.php');
+        if (count($dealer)) {
+            $configs = include('src/config/google.php');
             $google = new GoogleClient($configs);
             return $google->make('analytics');
         }
-        return Google::make('analytics');
+        $configs = include('src/config/google-pm-web.php');
+        $google = new GoogleClient($configs);
+        return $google->make('analytics');
     }
 }

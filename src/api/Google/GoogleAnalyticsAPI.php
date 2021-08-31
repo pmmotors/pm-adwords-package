@@ -18,7 +18,8 @@ class GoogleAnalyticsAPI
     public function __construct($dealer, $reportStartDate, $reportEndDate, $accountName)
     {
         $this->analytics = isset($dealer) ?
-            Dealership::getGoogleAnalyticsClient() : null;
+            Dealership::getGoogleAnalyticsClient($dealer) :
+            null;
 
         $this->profileId = isset($dealer) ?
             $dealer[0]['google_profile_id'] : '';
@@ -120,7 +121,6 @@ class GoogleAnalyticsAPI
         // get the multi dimensional array from GA API
         try {
             $results = $this->getAnalyticsData();
-            print_r($results);
             $formSubmissionsResult = $this->getFormSubmissions();
             // dd($formSubmissionsResult);
         } catch (apiServiceException $e) {

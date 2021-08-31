@@ -56,11 +56,12 @@ $ad_words_id = "104-280-2798";
 // $dialog->getDialogTechArray();
 
 // Testing Google
+// $profileId = "186447585";
 $profileId = "45468";
 $analytics = new AnalyticsController();
 $startDate = "2021-08-01";
 $endDate = "2021-08-19";
 
 $output = $analytics->getAnalyticsData($profileId, $startDate, $endDate);
-// print_r($output);
-// print_r(AnalyticsController::getDealer($profileId));
+print_r($output);
+// print_r(AnalyticsController::getDealerByDealerCode($profileId));
