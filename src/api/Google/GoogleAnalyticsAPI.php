@@ -214,15 +214,17 @@ class GoogleAnalyticsAPI
         $this->analyticsArray[$deviceType][$mediaType]['sessions'] += $row[2];
         // $row[3] integer The value of ga:users
         $this->analyticsArray[$deviceType][$mediaType]['users'] += $row[3];
+        // $row[3] integer The value of ga:newUsers
+        $this->analyticsArray[$deviceType][$mediaType]['newUsers'] += $row[4];
         // $row[4] integer The value of ga:bounces
-        $this->analyticsArray[$deviceType][$mediaType]['bounces'] += $row[4];
-        // $row[5] integer The value of ga:goal1Completions. The Goal 1 are Form Submissions
-        // $this->analyticsArray[$deviceType][$mediaType]['submissions'] += $row[7];//page views filtered
-        // $row[6] integer The value of ga:goal20Completions. The Goal 20 are Phone Leads
-        $this->analyticsArray[$deviceType][$mediaType]['calls'] += $row[6];
+        // $this->analyticsArray[$deviceType][$mediaType]['bounces'] += $row[4];
+        // // $row[5] integer The value of ga:goal1Completions. The Goal 1 are Form Submissions
+        // // $this->analyticsArray[$deviceType][$mediaType]['submissions'] += $row[7];//page views filtered
+        // // $row[6] integer The value of ga:goal20Completions. The Goal 20 are Phone Leads
+        // $this->analyticsArray[$deviceType][$mediaType]['calls'] += $row[6];
 
-        $this->analyticsArray[$deviceType][$mediaType]['pageViews'] += $row[7];
+        // $this->analyticsArray[$deviceType][$mediaType]['pageViews'] += $row[7];
 
-        $this->analyticsArray[$deviceType][$mediaType]['avgTimeOnPage'] += $row[8];
+        // $this->analyticsArray[$deviceType][$mediaType]['avgTimeOnPage'] += $row[8];
     }
 }
