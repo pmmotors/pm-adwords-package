@@ -60,8 +60,8 @@ $ad_words_id = "104-280-2798";
 // Testing Google
 // $profileId = "186447585";
 $profileId = "45468";
-// $analytics = new VisitsNewUsersReport();
-$analytics = new TrafficSourcesReport();
+$analytics = new VisitsNewUsersReport();
+// $analytics = new TrafficSourcesReport();
 $startDate = "2021-06-01";
 $endDate = "2021-08-31";
 

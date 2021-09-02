@@ -2,24 +2,24 @@
 
 namespace PmAnalyticsPackage\api\Google\Controllers;
 
-use PmAnalyticsPackage\api\Google\GoogleAnalyticsAPI;
+use PmAnalyticsPackage\api\Google\API\TrafficSourcesAPI;
 
 class TrafficSourcesReport extends AnalyticsController
 {
     public function getAnalyticsData($dealerCode, $startDate, $endDate)
     {
-        $reportType = 'traffic';
+        self::$reportType = 'traffic';
         $format = 'Y-m-d';
         $startDate = \DateTime::createFromFormat($format, $startDate);
         $endDate = \DateTime::createFromFormat($format, $endDate);
         $dealer = self::dealerType($dealerCode);
 
-        $ga = new GoogleAnalyticsAPI(
+        $ga = new TrafficSourcesAPI(
             $dealer,
             $startDate,
             $endDate,
             $dealer[0]['account_name'],
-            $reportType
+            self::$reportType
         );
 
         $output = [

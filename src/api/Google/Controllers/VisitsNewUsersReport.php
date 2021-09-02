@@ -3,24 +3,24 @@
 namespace PmAnalyticsPackage\api\Google\Controllers;
 
 use PmAnalyticsPackage\api\Google\Controllers\AnalyticsController;
-use PmAnalyticsPackage\api\Google\GoogleAnalyticsAPI;
+use PmAnalyticsPackage\api\Google\API\VisitsNewUsersAPI;
 
 class VisitsNewUsersReport extends AnalyticsController
 {
     public function getAnalyticsData($dealerCode, $startDate, $endDate)
     {
-        $reportType = 'visits_new_users';
+        self::$reportType = 'visits_new_users';
         $format = 'Y-m-d';
         $startDate = \DateTime::createFromFormat($format, $startDate);
         $endDate = \DateTime::createFromFormat($format, $endDate);
         $dealer = self::dealerType($dealerCode);
 
-        $ga = new GoogleAnalyticsAPI(
+        $ga = new VisitsNewUsersAPI(
             $dealer,
             $startDate,
             $endDate,
             $dealer[0]['account_name'],
-            $reportType
+            self::$reportType
         );
 
         $output = [

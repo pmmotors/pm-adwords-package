@@ -1,21 +1,12 @@
 <?php
 
-namespace PmAnalyticsPackage\api\Google;
+namespace PmAnalyticsPackage\api\Google\API;
 
 use PmAnalyticsPackage\api\Google\Models\Dealership;
 
-class GoogleAnalyticsAPI
+class VisitsNewUsersAPI extends GoogleAnalyticsAPI
 {
-    private $errorMsg = '';
-    private $analytics;
-    private $profileId;
-    private $reportStartDate;
-    private $reportEndDate;
-    private $analyticsReportType;
-    private $analyticsResults;
-    public $analyticsArray;
-
-    public function __construct($dealer, $reportStartDate, $reportEndDate, $accountName, $reportType)
+    public function __construct($dealer, $reportStartDate, $reportEndDate, $accountName)
     {
         $this->analytics = isset($dealer) ?
             Dealership::getGoogleAnalyticsClient($dealer) :
@@ -31,22 +22,10 @@ class GoogleAnalyticsAPI
         if (empty($this->profileId))
             return;
 
-        switch ($reportType) {
-            case 'visits_new_users':
-                $this->setAnalyticsArray();
-                break;
-
-            case 'traffic':
-                $this->setAnalyticsTrafficSourceArray();
-                break;
-
-            default:
-                # code...
-                break;
-        }
+        $this->setAnalyticsArray();
     }
 
-    private function initAnalyticsArray()
+    public function initAnalyticsArray()
     {
         // The values of the columns of the VW Report for the Analytics data
         $analyticsRows = array(
@@ -54,10 +33,10 @@ class GoogleAnalyticsAPI
             'users' => 0,
             'newUsers' => 0,
             'submissions' => 0,
-            'calls' => 0,
-            'bounces' => 0,
-            'pageViews' => 0,
-            'avgTimeOnPage' => 0
+            // 'calls' => 0,
+            // 'bounces' => 0,
+            // 'pageViews' => 0,
+            // 'avgTimeOnPage' => 0
         );
         // All the media types available
         $mediaTypes = array(
@@ -81,7 +60,7 @@ class GoogleAnalyticsAPI
      *
      * @return array A multi dimensional array from Google Analytics API
      */
-    private function getAnalyticsData()
+    public function getAnalyticsData()
     {
         /**
          * To test the metrics, dimensions and/or filters go to http://ga-dev-tools.appspot.com/explorer/
@@ -108,44 +87,7 @@ class GoogleAnalyticsAPI
         );
     }
 
-    private function getAnalyticsTrafficSourceData()
-    {
-        /**
-         * To test the metrics, dimensions and/or filters go to http://ga-dev-tools.appspot.com/explorer/
-         */
-
-        $metrics = [
-            //ga:sessions,ga:pageviews,ga:sessionDuration,ga:exits
-            'ga:sessions',
-            'ga:pageviews',
-            'ga:sessionDuration',
-            'ga:bounceRate'
-        ];
-
-        /**
-         * [0] -> deviceCategory => 'desktop - mobile - tablet'
-         * [1] -> source => 'google - facebook'
-         * [2] -> medium => 'referral - organic - cpc'
-         * [3] -> 'ga:sessions'
-         * [4] -> 'ga:pageviews'
-         * [5] -> 'ga:sessionDuration'
-         * [6] -> 'ga:bounceRate' 
-         */
-        $dateFormat = 'Y-m-d';
-
-        return $this->analytics->data_ga->get(
-            'ga:' . $this->profileId,                                                   // Google Profile Id (Not the Google Analytics Id)
-            $this->reportStartDate->format($dateFormat),                               // Start Date: YYYY-MM-DD, today, yesterday, or 7daysAgo
-            $this->reportEndDate->format($dateFormat),                                    // End Date: YYYY-MM-DD, today, yesterday, or 7daysAgo
-            implode(',', $metrics),  // The metrics data to be retrieved from the API
-            array(
-                'dimensions' => 'ga:deviceCategory,ga:source,ga:medium',
-                'sort' => '-ga:sessions'
-            )               // The dimension data to be retrieved from the API.
-        );
-    }
-
-    private function getFormSubmissions()
+    public function getFormSubmissions()
     {
         $metrics = [
             'ga:pageviews',
@@ -163,10 +105,11 @@ class GoogleAnalyticsAPI
             )               // The dimension data to be retrieved from the API.
         );
     }
+
     /**
      * Retrieve the data necessary for the report from the multi dimensional array from Google Analytics API
      */
-    private function setAnalyticsArray()
+    public function setAnalyticsArray()
     {
         // get the multi dimensional array from GA API
         try {
@@ -223,71 +166,12 @@ class GoogleAnalyticsAPI
         }
     }
 
-    private function setAnalyticsTrafficSourceArray()
-    {
-        // get the multi dimensional array from GA API
-        try {
-            $results = $this->getAnalyticsTrafficSourceData();
-            // print_r($results);
-            // dd($formSubmissionsResult);
-        } catch (apiServiceException $e) {
-            // Error from the API.
-            echo '<p class="errorMessage">There was an API error: ' . $e->getCode() . ' : ' . $e->getMessage() . '</p>' . PHP_EOL;
-            $this->errorMsg .= 'There was an API error : ' . $e->getCode() . ' : ' . $e->getMessage() . PHP_EOL;
-        } catch (\Exception $e) {
-            echo '<p class="errorMessage">There was a general error: ' . $e->getMessage() . '</p>' . PHP_EOL;
-            $this->errorMsg .= 'There was a general error : ' . $e->getMessage() . PHP_EOL;
-        }
-
-        $rows = $results->getRows();
-        // print_r($rows);
-        if (!empty($results) && $rows &&  count($rows) > 0) {
-            /**
-             * $rows[0] string The value from ga:deviceCategory
-             * $rows[1] string The value from ga:channelGrouping
-             * $rows[2] integer The value from ga:sessions
-             * $rows[3] integer The value from ga:users
-             * $rows[4] integer The value from ga:bounces
-             */
-            $numRows = count($rows);
-            // loop through all the rows of the multi dimensional array
-            for ($i = 0; $i < $numRows; $i++) {
-                $deviceType = $rows[$i][0];
-                $mediaType = $this->getChannelGrouping($rows[$i]);
-                $this->setDeviceMediaTraffic($deviceType, $mediaType, $rows[$i]);
-            }
-        }
-        // There are no Google Analytics data
-        else {
-            echo '<p class="errorMessage">No Google Analytics results found for account: <span class="accountName">' . $this->accountName . '</span></p>' . PHP_EOL;
-            $this->warningMsg .= 'No Google Analytics results found for account: ' . $this->accountName . PHP_EOL;
-        }
-    }
-
     private function getDeviceType($row)
     {
         /**
          * $row[0] string The value from ga:deviceCategory. Possible values are "desktop", "mobile" and "tablet"
          */
         return $row[0] == 'desktop' ? 'desktop' : 'mobile';
-    }
-
-    private function getChannelGrouping($row)
-    {
-        /**
-         * These include Organic, CPC (AKA cost per click for digital ads), Display (for display ads specifically), Direct, Referral, Social, Email, and (Other).
-         */
-        $channel = $row[2];
-        switch ($row[2]) {
-            case 'cpc':
-                $channel = "paid";
-                break;
-
-            case '(not set)':
-            case '(none)':
-                $channel = "other";
-        }
-        return $channel;
     }
 
     private function getMediaType($row)
@@ -328,16 +212,5 @@ class GoogleAnalyticsAPI
         $this->analyticsArray[$deviceType][$mediaType]['users'] += $row[3];
         // $row[3] integer The value of ga:newUsers
         $this->analyticsArray[$deviceType][$mediaType]['newUsers'] += $row[4];
-    }
-
-    private function setDeviceMediaTraffic($deviceType, $mediaType, $row)
-    {
-        // $row[2] integer The value of ga:sessions
-        $this->analyticsArray[$deviceType][$mediaType]['sessions'] += $row[3];
-        // $row[3] integer The value of ga:users
-        $this->analyticsArray[$deviceType][$mediaType]['pageviews'] += $row[4];
-        // $row[3] integer The value of ga:newUsers
-        $this->analyticsArray[$deviceType][$mediaType]['sessionDuration'] += $row[5];
-        $this->analyticsArray[$deviceType][$mediaType]['bounceRate'] += $row[6];
     }
 }
