@@ -22,21 +22,38 @@ class AnalyticsController
             $dealer[0]['account_name']
         );
 
+        // $output = [
+        //     'sessions' => 0,
+        //     'users' => 0,
+        //     'newUsers' => 0
+        // ];
+
         $output = [
-            'sessions' => 0,
-            'users' => 0,
-            'newUsers' => 0
+            'ga:sessions' => 0,
+            'ga:pageviews' => 0,
+            'ga:sessionDuration' => 0,
+            'ga:bounceRate' => 0
         ];
 
-        foreach ($ga->analyticsArray as $device => $networks) {
-            foreach ($networks as $network => $data) {
-                foreach ($output as $key => $value) {
-                    $output[$key] += $data[$key] ?? 0;
+        $results = [];
+        // print_r($ga->analyticsArray);
+        foreach ($ga->analyticsArray as $device => $channels) {
+            foreach ($channels as $channel => $data) {
+                foreach ($data as $metrics => $metric) {
+                    $results[$channel][$metrics] += $metric;
                 }
             }
         }
-        $output['google_profile_id'] = $dealer[0]['google_profile_id'];
-        $output['account_name'] = $dealer[0]['account_name'];
+        print_r($results);
+        // foreach ($ga->analyticsArray as $device => $networks) {
+        //     foreach ($networks as $network => $data) {
+        //         foreach ($output as $key => $value) {
+        //             $output[$key] += $data[$key] ?? 0;
+        //         }
+        //     }
+        // }
+        // $output['google_profile_id'] = $dealer[0]['google_profile_id'];
+        // $output['account_name'] = $dealer[0]['account_name'];
         return $output;
     }
 
