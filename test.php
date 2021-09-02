@@ -5,6 +5,8 @@ use PmAnalyticsPackage\api\AdWords\AdWordsConnection;
 use PmAnalyticsPackage\api\AdWords\AdWordsReportBudget;
 use PmAnalyticsPackage\api\Google\GoogleAnalytics;
 use PmAnalyticsPackage\api\Google\Controllers\AnalyticsController;
+use PmAnalyticsPackage\api\Google\Controllers\TrafficSourcesReport;
+use PmAnalyticsPackage\api\Google\Controllers\VisitsNewUsersReport;
 use PmMotors\Google\Facades\Google;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -58,10 +60,11 @@ $ad_words_id = "104-280-2798";
 // Testing Google
 // $profileId = "186447585";
 $profileId = "45468";
-$analytics = new AnalyticsController();
+// $analytics = new VisitsNewUsersReport();
+$analytics = new TrafficSourcesReport();
 $startDate = "2021-06-01";
 $endDate = "2021-08-31";
 
 $output = $analytics->getAnalyticsData($profileId, $startDate, $endDate);
-// print_r($output);
+print_r($output);
 // print_r(AnalyticsController::getDealerByDealerCode($profileId));

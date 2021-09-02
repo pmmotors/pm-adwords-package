@@ -15,7 +15,7 @@ class GoogleAnalyticsAPI
     private $analyticsResults;
     public $analyticsArray;
 
-    public function __construct($dealer, $reportStartDate, $reportEndDate, $accountName)
+    public function __construct($dealer, $reportStartDate, $reportEndDate, $accountName, $reportType)
     {
         $this->analytics = isset($dealer) ?
             Dealership::getGoogleAnalyticsClient($dealer) :
@@ -31,8 +31,19 @@ class GoogleAnalyticsAPI
         if (empty($this->profileId))
             return;
 
-        // $this->setAnalyticsArray();
-        $this->setAnalyticsTrafficSourceArray();
+        switch ($reportType) {
+            case 'visits_new_users':
+                $this->setAnalyticsArray();
+                break;
+
+            case 'traffic':
+                $this->setAnalyticsTrafficSourceArray();
+                break;
+
+            default:
+                # code...
+                break;
+        }
     }
 
     private function initAnalyticsArray()
