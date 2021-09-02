@@ -12,6 +12,7 @@ abstract class GoogleAnalyticsAPI
     private $analyticsReportType;
     private $analyticsResults;
     public $analyticsArray;
+    public $response;
     private $accountName;
 
     public abstract function initAnalyticsArray();

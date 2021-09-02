@@ -6,6 +6,12 @@ use PmAnalyticsPackage\api\Google\Models\Dealership;
 
 class TrafficSourcesAPI extends GoogleAnalyticsAPI
 {
+    private $trafficByDevice = array(
+        'desktop' => 0,
+        'tablet' => 0,
+        'mobile' => 0
+    );
+
     public function __construct($dealer, $reportStartDate, $reportEndDate, $accountName)
     {
         $this->analytics = isset($dealer) ?
@@ -50,6 +56,10 @@ class TrafficSourcesAPI extends GoogleAnalyticsAPI
         $this->analyticsArray = array(
             'desktop' => $mediaTypes,
             'mobile' => $mediaTypes
+        );
+        $this->response = array(
+            'device' => array(),
+            'sources' => array()
         );
     }
 
@@ -122,7 +132,14 @@ class TrafficSourcesAPI extends GoogleAnalyticsAPI
                 $deviceType = $rows[$i][0];
                 $mediaType = $this->getChannelGrouping($rows[$i]);
                 $this->setDeviceMediaTraffic($deviceType, $mediaType, $rows[$i]);
+                $this->contTrafficByDevice($rows[$i]);
             }
+
+            $this->response['device'] = $this->trafficByDevice;
+            $this->response['sources'] = $this->analyticsArray;
+
+            // print_r($this->response);
+            return $this->response;
         }
         // There are no Google Analytics data
         else {
@@ -158,5 +175,22 @@ class TrafficSourcesAPI extends GoogleAnalyticsAPI
         // $row[3] integer The value of ga:newUsers
         $this->analyticsArray[$deviceType][$mediaType]['sessionDuration'] += $row[5];
         $this->analyticsArray[$deviceType][$mediaType]['bounceRate'] += $row[6];
+    }
+
+    private function contTrafficByDevice($row)
+    {
+        switch ($row[0]) {
+            case 'desktop':
+                $this->trafficByDevice['desktop'] += 1;
+                break;
+
+            case 'mobile':
+                $this->trafficByDevice['mobile'] += 1;
+                break;
+
+            case 'tablet':
+                $this->trafficByDevice['tablet'] += 1;
+                break;
+        }
     }
 }

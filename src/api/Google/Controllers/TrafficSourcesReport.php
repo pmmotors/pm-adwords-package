@@ -29,18 +29,23 @@ class TrafficSourcesReport extends AnalyticsController
             'ga:bounceRate' => 0
         ];
 
+        // print_r($ga->response);
         $results = [];
-        foreach ($ga->analyticsArray as $device => $channels) {
+        // $results['device'] = $ga->response['device'];
+        foreach ($ga->response['sources'] as $device => $channels) {
             foreach ($channels as $channel => $data) {
                 foreach ($data as $metrics => $metric) {
                     $results[$channel][$metrics] += $metric;
                 }
             }
         }
-        $results['google_profile_id'] = $dealer[0]['google_profile_id'];
-        $results['account_name'] = $dealer[0]['account_name'];
+        $response['device'] = $ga->response['device'];
+        $response['sources'] = $results;
+        $response['google_profile_id'] = $dealer[0]['google_profile_id'];
+        $response['account_name'] = $dealer[0]['account_name'];
 
-        return $results;
+        // print_r($response);
+        return $response;
     }
 
     // public function getAnalyticsData($dealerCode, $startDate, $endDate)
