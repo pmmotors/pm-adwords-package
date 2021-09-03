@@ -72,7 +72,6 @@ class TrafficSourcesAPI extends GoogleAnalyticsAPI
          */
 
         $metrics = [
-            //ga:sessions,ga:pageviews,ga:sessionDuration,ga:exits
             'ga:sessions',
             'ga:pageviews',
             'ga:sessionDuration',
@@ -175,11 +174,8 @@ class TrafficSourcesAPI extends GoogleAnalyticsAPI
 
     private function setDeviceMediaTraffic($deviceType, $mediaType, $row)
     {
-        // $row[2] integer The value of ga:sessions
         $this->analyticsArray[$deviceType][$mediaType]['sessions'] += $row[3];
-        // $row[3] integer The value of ga:users
         $this->analyticsArray[$deviceType][$mediaType]['pageviews'] += $row[4];
-        // $row[3] integer The value of ga:newUsers
         $this->analyticsArray[$deviceType][$mediaType]['sessionDuration'] += $row[5];
         $this->analyticsArray[$deviceType][$mediaType]['bounceRate'] += $row[6];
     }
