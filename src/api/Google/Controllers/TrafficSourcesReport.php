@@ -40,6 +40,7 @@ class TrafficSourcesReport extends AnalyticsController
             }
         }
         $response['device'] = $ga->response['device'];
+        $response['referral_sources'] = $ga->response['referral_sources'];
         $response['sources'] = $results;
         $response['google_profile_id'] = $dealer[0]['google_profile_id'];
         $response['account_name'] = $dealer[0]['account_name'];

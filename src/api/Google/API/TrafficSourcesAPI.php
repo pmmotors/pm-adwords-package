@@ -12,6 +12,8 @@ class TrafficSourcesAPI extends GoogleAnalyticsAPI
         'mobile' => 0
     );
 
+    private $referral = array();
+
     public function __construct($dealer, $reportStartDate, $reportEndDate, $accountName)
     {
         $this->analytics = isset($dealer) ?
@@ -131,12 +133,17 @@ class TrafficSourcesAPI extends GoogleAnalyticsAPI
             for ($i = 0; $i < $numRows; $i++) {
                 $deviceType = $rows[$i][0];
                 $mediaType = $this->getChannelGrouping($rows[$i]);
+                $source = $rows[$i][1];
                 $this->setDeviceMediaTraffic($deviceType, $mediaType, $rows[$i]);
                 $this->contTrafficByDevice($rows[$i]);
+                $this->setReferralSources($source, $rows[$i]);
             }
 
+            // print_r($this->analyticsArray);
+            print_r($this->referralSources);
             $this->response['device'] = $this->trafficByDevice;
             $this->response['sources'] = $this->analyticsArray;
+            $this->response['referral_sources'] = $this->referralSources;
 
             // print_r($this->response);
             return $this->response;
@@ -175,6 +182,14 @@ class TrafficSourcesAPI extends GoogleAnalyticsAPI
         // $row[3] integer The value of ga:newUsers
         $this->analyticsArray[$deviceType][$mediaType]['sessionDuration'] += $row[5];
         $this->analyticsArray[$deviceType][$mediaType]['bounceRate'] += $row[6];
+    }
+
+    private function setReferralSources($source, $row)
+    {
+        $this->referralSources[$source]['sessions'] += $row[3];
+        $this->referralSources[$source]['pageviews'] += $row[4];
+        $this->referralSources[$source]['sessionDuration'] += $row[5];
+        $this->referralSources[$source]['bounceRate'] += $row[6];
     }
 
     private function contTrafficByDevice($row)
