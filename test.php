@@ -5,6 +5,7 @@ use PmAnalyticsPackage\api\AdWords\AdWordsConnection;
 use PmAnalyticsPackage\api\AdWords\AdWordsReportBudget;
 use PmAnalyticsPackage\api\Google\GoogleAnalytics;
 use PmAnalyticsPackage\api\Google\Controllers\AnalyticsController;
+use PmAnalyticsPackage\api\Google\Controllers\OrganicTrafficReport;
 use PmAnalyticsPackage\api\Google\Controllers\TopLandingPagesReport;
 use PmAnalyticsPackage\api\Google\Controllers\TrafficSourcesReport;
 use PmAnalyticsPackage\api\Google\Controllers\VisitsNewUsersReport;
@@ -63,7 +64,8 @@ $ad_words_id = "104-280-2798";
 $profileId = "45468";
 // $analytics = new VisitsNewUsersReport();
 // $analytics = new TrafficSourcesReport();
-$analytics = new TopLandingPagesReport();
+// $analytics = new TopLandingPagesReport();
+$analytics = new OrganicTrafficReport();
 $startDate = "2021-06-01";
 $endDate = "2021-08-31";
 

@@ -127,7 +127,7 @@ class VisitsNewUsersAPI extends GoogleAnalyticsAPI
 
         $rows = $results->getRows();
         // echo "--- rows sin tocar ---" . PHP_EOL;
-        // print_r($rows);
+        print_r($rows);
         if (!empty($results) && $rows &&  count($rows) > 0) {
             /**
              * $rows[0] string The value from ga:deviceCategory
