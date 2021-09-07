@@ -2,9 +2,9 @@
 
 namespace PmAnalyticsPackage\api\Google;
 
-use PmAnalyticsPackage\api\Helpers\CurlHelper;
 use PmMotors\Google\Facades\Google;
 use PmMotors\Google\Client as GoogleClient;
+use Dotenv\Dotenv;
 
 class GoogleAnalytics
 {
@@ -65,13 +65,25 @@ class GoogleAnalytics
 
     public static function getGoogleAnalyticsClient($dealer)
     {
+        $dotenv = Dotenv::createImmutable('./');
+        $dotenv->safeLoad();
+
+        $env = $_ENV['MODE'];
         if (count($dealer)) {
-            $configs = include('src/config/google.php');
+            if ($env === 'dev') {
+                $configs = include('src/config/google.php');
+                $google = new GoogleClient($configs);
+                return $google->make('analytics');
+            }
+            $google = new GoogleClient(config('google'));
+            return $google->make('analytics');
+        }
+        if ($env === 'dev') {
+            $configs = include('src/config/google-pm-web.php');
             $google = new GoogleClient($configs);
             return $google->make('analytics');
         }
-        $configs = include('src/config/google-pm-web.php');
-        $google = new GoogleClient($configs);
+        $google = new GoogleClient(config('google-pm-web'));
         return $google->make('analytics');
     }
 }
