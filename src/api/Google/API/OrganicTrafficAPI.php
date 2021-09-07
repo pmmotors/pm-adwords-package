@@ -121,12 +121,9 @@ class OrganicTrafficAPI extends GoogleAnalyticsAPI
                 }
             }
 
-            print_r($this->analyticsArray);
-            // $this->response['chart'] = $this->chartArray;
-            // $this->response['table'] = $this->analyticsArray;
-
-            // return $this->response;
             // print_r($this->analyticsArray);
+
+            return $this->analyticsArray;
         }
         // There are no Google Analytics data
         else {

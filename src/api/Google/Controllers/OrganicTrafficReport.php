@@ -20,5 +20,10 @@ class OrganicTrafficReport extends AnalyticsController
             $endDate,
             $dealer[0]['account_name']
         );
+
+        $ga->analyticsArray['google_profile_id'] = $dealer[0]['google_profile_id'];
+        $ga->analyticsArray['account_name'] = $dealer[0]['account_name'];
+
+        return $ga->analyticsArray;
     }
 }
