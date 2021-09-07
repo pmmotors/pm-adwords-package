@@ -7,6 +7,7 @@ use PmAnalyticsPackage\api\Google\GoogleAnalytics;
 use PmAnalyticsPackage\api\Google\Controllers\AnalyticsController;
 use PmAnalyticsPackage\api\Google\Controllers\OrganicTrafficReport;
 use PmAnalyticsPackage\api\Google\Controllers\OrganicTrafficUsersVisitsReport;
+use PmAnalyticsPackage\api\Google\Controllers\OverviewVisitsUsersReport;
 use PmAnalyticsPackage\api\Google\Controllers\TopLandingPagesReport;
 use PmAnalyticsPackage\api\Google\Controllers\TrafficSourcesReport;
 use PmAnalyticsPackage\api\Google\Controllers\VisitsNewUsersReport;
@@ -67,7 +68,8 @@ $profileId = "45468";
 // $analytics = new TrafficSourcesReport();
 // $analytics = new TopLandingPagesReport();
 // $analytics = new OrganicTrafficReport();
-$analytics = new OrganicTrafficUsersVisitsReport();
+// $analytics = new OrganicTrafficUsersVisitsReport();
+$analytics = new OverviewVisitsUsersReport();
 $startDate = "2021-06-01";
 $endDate = "2021-08-31";
 

@@ -4,7 +4,7 @@ namespace PmAnalyticsPackage\api\Google\API;
 
 use PmAnalyticsPackage\api\Google\Models\Dealership;
 
-class VisitsNewUsersAPI extends GoogleAnalyticsAPI
+class OverviewVisitsUsersAPI extends GoogleAnalyticsAPI
 {
     public function __construct($dealer, $reportStartDate, $reportEndDate, $accountName)
     {
@@ -32,7 +32,8 @@ class VisitsNewUsersAPI extends GoogleAnalyticsAPI
             'sessions' => 0,
             'users' => 0,
             'newUsers' => 0,
-            'submissions' => 0,
+            'pageviews' => 0,
+            'sessionDuration' => 0,
             // 'calls' => 0,
             // 'bounces' => 0,
             // 'pageViews' => 0,
@@ -70,6 +71,8 @@ class VisitsNewUsersAPI extends GoogleAnalyticsAPI
             'ga:sessions',
             'ga:users',
             'ga:newUsers',
+            'ga:pageviews',
+            'ga:sessionDuration'
             // 'ga:bounces',
             // 'ga:goal1Completions',
             // 'ga:goal20Completions',
@@ -87,34 +90,11 @@ class VisitsNewUsersAPI extends GoogleAnalyticsAPI
         );
     }
 
-    public function getFormSubmissions()
-    {
-        $metrics = [
-            'ga:pageviews',
-        ];
-        $dateFormat = 'Y-m-d';
-
-        return $this->analytics->data_ga->get(
-            'ga:' . $this->profileId,                                                   // Google Profile Id (Not the Google Analytics Id)
-            $this->reportStartDate->format($dateFormat),                               // Start Date: YYYY-MM-DD, today, yesterday, or 7daysAgo
-            $this->reportEndDate->format($dateFormat),                                    // End Date: YYYY-MM-DD, today, yesterday, or 7daysAgo
-            implode(',', $metrics),  // The metrics data to be retrieved from the API
-            array(
-                'dimensions' => 'ga:deviceCategory,ga:channelGrouping',
-                'filters' => 'ga:pagePath=~(thank-you|confirm.htm|thankyou)'
-            )               // The dimension data to be retrieved from the API.
-        );
-    }
-
-    /**
-     * Retrieve the data necessary for the report from the multi dimensional array from Google Analytics API
-     */
     public function setAnalyticsArray()
     {
         // get the multi dimensional array from GA API
         try {
             $results = $this->getAnalyticsData();
-            $formSubmissionsResult = $this->getFormSubmissions();
             // dd($formSubmissionsResult);
         } catch (apiServiceException $e) {
             // Error from the API.
@@ -127,37 +107,27 @@ class VisitsNewUsersAPI extends GoogleAnalyticsAPI
 
         $rows = $results->getRows();
         // echo "--- rows sin tocar ---" . PHP_EOL;
-        print_r($rows);
+        // print_r($rows);
         if (!empty($results) && $rows &&  count($rows) > 0) {
             /**
              * $rows[0] string The value from ga:deviceCategory
              * $rows[1] string The value from ga:channelGrouping
              * $rows[2] integer The value from ga:sessions
              * $rows[3] integer The value from ga:users
-             * $rows[4] integer The value from ga:bounces
+             * $rows[4] integer The value from ga:newUsers
+             * $rows[5] integer The value from ga:pageviews
+             * $rows[6] integer The value from ga:sessionDuration
              */
             $numRows = count($rows);
             // loop through all the rows of the multi dimensional array
             for ($i = 0; $i < $numRows; $i++) {
-                $deviceType = self::getDeviceType($rows[$i]);
-                $mediaType = self::getMediaType($rows[$i]);
-                $this->setDeviceMedia($deviceType, $mediaType, $rows[$i]);
-            }
-
-            //FORM SUBMI
-            $rows = $formSubmissionsResult->getRows();
-            $numRows = count($rows);
-            // loop through all the rows of the multi dimensional array
-            for ($i = 0; $i < $numRows; $i++) {
                 $row = $rows[$i];
-                $deviceType = self::getDeviceType($row);
-                $mediaType = self::getMediaType($row);
-                $this->analyticsArray[$deviceType][$mediaType]['submissions'] += $row[2];
+                $deviceType = VisitsNewUsersAPI::getDeviceType($row);
+                $mediaType = VisitsNewUsersAPI::getMediaType($row);
+                $this->setDeviceMedia($deviceType, $mediaType, $row);
             }
 
-            // echo PHP_EOL . "--- analyticsArray ---" . PHP_EOL;
-            // print_r($this->analyticsArray);
-            //END FORM SUBMI
+            return $this->analyticsArray;
         }
         // There are no Google Analytics data
         else {
@@ -166,44 +136,6 @@ class VisitsNewUsersAPI extends GoogleAnalyticsAPI
         }
     }
 
-    public static function getDeviceType($row)
-    {
-        /**
-         * $row[0] string The value from ga:deviceCategory. Possible values are "desktop", "mobile" and "tablet"
-         */
-        return $row[0] == 'desktop' ? 'desktop' : 'mobile';
-    }
-
-    public static function getMediaType($row)
-    {
-        /**
-         * $row[1] string The values are "Direct", "Organic Search", "Paid Search", "Referral", "Display" or "Social"
-         * The value comes from the ga:channelGrouping dimension
-         */
-
-        // This is not required but I'm going to include. This would be "Referral" or "Direct"
-        $mediaType = 'other';
-        switch ($row[1]) {
-            case 'Paid Search':
-                $mediaType = 'search';
-                break;
-            case 'Display':
-                $mediaType = 'display';
-                break;
-            case 'Social':
-                $mediaType = 'social';
-                break;
-        }
-        return $mediaType;
-    }
-
-    /**
-     * Add all the Sessions, Users, Bounces, Submissions and Calls. Then put them into the Analytics array
-     *
-     * @param $deviceType string The values are either "desktop" or "mobile"
-     * @param $mediaType string The values are "search", "display", "social" or "other"
-     * @param $row array A row from the results of the Analytics API call
-     */
     private function setDeviceMedia($deviceType, $mediaType, $row)
     {
         // $row[2] integer The value of ga:sessions
@@ -212,5 +144,9 @@ class VisitsNewUsersAPI extends GoogleAnalyticsAPI
         $this->analyticsArray[$deviceType][$mediaType]['users'] += $row[3];
         // $row[3] integer The value of ga:newUsers
         $this->analyticsArray[$deviceType][$mediaType]['newUsers'] += $row[4];
+        // $row[3] integer The value of ga:pageviews
+        $this->analyticsArray[$deviceType][$mediaType]['pageviews'] += $row[5];
+        // $row[3] integer The value of ga:sessionDuration
+        $this->analyticsArray[$deviceType][$mediaType]['sessionDuration'] += $row[6];
     }
 }
