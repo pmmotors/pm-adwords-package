@@ -2,9 +2,9 @@
 
 namespace PmAnalyticsPackage\api\Google\Controllers;
 
-use PmAnalyticsPackage\api\Google\API\OverviewVisitsUsersAPI;
+use PmAnalyticsPackage\api\Google\API\SummaryVisitsUsersAPI;
 
-class OverviewVisitsUsersReport extends AnalyticsController
+class SummaryVisitsUsersReport extends AnalyticsController
 {
     public function getAnalyticsData($dealerCode, $startDate, $endDate)
     {
@@ -13,7 +13,7 @@ class OverviewVisitsUsersReport extends AnalyticsController
         $endDate = \DateTime::createFromFormat($format, $endDate);
         $dealer = self::dealerType($dealerCode);
 
-        $ga = new OverviewVisitsUsersAPI(
+        $ga = new SummaryVisitsUsersAPI(
             $dealer,
             $startDate,
             $endDate,
